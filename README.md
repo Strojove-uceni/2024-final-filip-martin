@@ -4,3 +4,10 @@
 *   *Include working demo in Colab, in which you clearly demonstrate your results. Please refer to the Implementation section on the [labs website](https://su2.utia.cas.cz/labs.html#projects).*
 *   *Do not upload huge datasets to GitHub repository.*
 
+Assignment description:
+
+We would like to focus on the classification of audio inputs.
+Our goal is to create a neural network where the input will be data in the form of an audio signal, and the output will be a decision about the content of the audio signal.
+
+The final choice of dataset is yet to be finalized, we are considering for example this one
+- https://www.kaggle.com/c/tensorflow-speech-recognition-challenge/data
