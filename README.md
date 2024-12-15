@@ -1,11 +1,42 @@
-## Assignment description:
+# Rozpoznávání zvuku pro neslyšící:
+##  Popis cíle:
 
-We would like to focus on the classification of audio inputs.
-Our goal is to create a neural network where the input will be data in the form of an audio signal, and the output will be a decision about the content of the audio signal.
+Naším cílem je na základě veřejných dat z youtube vytvořit síť, která je schopná analyzovat zvukovou stopu a klasifikovat
+její obsah.
+Zdrojem dat je: 'https://research.google.com/audioset/unbalanced_train/vehicle.html'
 
-The final choice of dataset is yet to be finalized, we are considering for example this one
-- https://www.kaggle.com/c/tensorflow-speech-recognition-challenge/data
+## Provedení
+### Získání dat
+Pro získávání dat slouží script data_collection_final ve složce data_preparation
 
+### Předpříprava dat
+Pro získávání dat slouží script data_preprocessing ve složce data_preparation
+Jednotlivé zvukové soubory jsou:
+- Resamplovány na identický sample_rate  
+- Trimovány na 8s
+- Normalizovány na [0, 1]
+
+Následně z nich je:
+- Vypočítán melův histogram
+- Všechna data jsou převedena do jednoho h5 souboru
+
+### Učení
+Je popsáno v Noise_recognition.ipynb ve složce noise_recognition
+
+Nad daty je vytvořena několika konvoluční síť s dense klasifikační vrstvou
+Bylo vyzkoušeno více typů dat a sítí, postup s nejlepšími výsledky je popsán ve výše uvedeném souboru
+
+## Výsledky
+Síť je schopná se učit a klasifikovat s cca 70% přesností
+Problémy jsou:
+- Relativně malý dataset cca 3000 samplů
+- Špatná čistota dat
+
+### Možnosti zlepšení
+K vylepšení výsledků by mohlo pomoci
+- Získat větší dataset
+- Očistit stávající dataset o špatné labely
+- Využít transfer_learningu a některé z již existujících sítí
 
 --- 
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/rMTkWhxv)
