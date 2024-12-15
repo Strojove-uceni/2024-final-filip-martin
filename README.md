@@ -1,47 +1,65 @@
-# Rozpoznávání zvuku pro neslyšící:
-##  Popis cíle:
+# 🎧 **Rozpoznávání zvuku - tvorba titulků pro neslyšící**  
 
-Naším cílem je na základě veřejných dat z youtube vytvořit síť, která je schopná analyzovat zvukovou stopu a klasifikovat
-její obsah.
-Zdrojem dat je: 'https://research.google.com/audioset/unbalanced_train/vehicle.html'
+## 📋 **Popis cíle**  
+Naším cílem je vytvořit nástroj, který analyzuje zvukovou stopu, klasifikuje zvuky a generuje titulky pro neslyšící. 
+Jako zdroj dat využíváme veřejný dataset [YouTube AudioSet](https://research.google.com/audioset/unbalanced_train/vehicle.html).  
 
-## Provedení
-### Získání dat
-Pro získávání dat slouží script data_collection_final ve složce data_preparation
+---
 
-### Předpříprava dat
-Pro získávání dat slouží script data_preprocessing ve složce data_preparation
-Jednotlivé zvukové soubory jsou:
-- Resamplovány na identický sample_rate  
-- Trimovány na 8s
-- Normalizovány na [0, 1]
+## 🛠️ **Implementace**  
 
-Následně z nich je:
-- Vypočítán melův histogram
-- Všechna data jsou převedena do jednoho h5 souboru
+### Získání dat  
+Data jsou získána pomocí skriptu `data_collection_final.ipynb` ve složce **data_preparation**.  
 
-### Učení
-Je popsáno v Noise_recognition.ipynb ve složce noise_recognition
+### Předzpracování dat  
+Pro předzpracování dat je použit skript `data_preprocessing.ipynb`, který provádí následující kroky:  
+- **Resamplování** všech zvukových souborů na jednotný *sample_rate*.  
+- **Trimování** zvukových záznamů na délku **8 sekund**.  
+- **Normalizace** do intervalu **[0, 1]**.  
+- **Výpočet Mel spectrogramů** pro reprezentaci zvuku.  
+- **Uložení dat** do jednotného **HDF5 souboru** pro efektivní načítání.  
 
-Nad daty je vytvořena několika konvoluční síť s dense klasifikační vrstvou
-Bylo vyzkoušeno více typů dat a sítí, postup s nejlepšími výsledky je popsán ve výše uvedeném souboru
+### Trénování modelu  
+- Hlavní model je popsán v notebooku `Noise_recognition.ipynb` ve složce **noise_recognition**.  
+- Použitý model: **Konvoluční neuronová síť (CNN)** s **dense klasifikační vrstvou**.  
 
-## Výsledky
-Síť je schopná se učit a klasifikovat s cca 70% přesností
-Problémy jsou:
-- Relativně malý dataset cca 3000 samplů
-- Špatná čistota dat
+---
 
-### Možnosti zlepšení
-K vylepšení výsledků by mohlo pomoci
-- Získat větší dataset
-- Očistit stávající dataset o špatné labely
-- Využít transfer_learningu a některé z již existujících sítí
+## 📈 **Výsledky**  
+- ✅ Model dosahuje přesnosti **80 %** při klasifikaci zvukových záznamů.  
+- ⚠️ **Hlavní problémy**:  
+  - Malá velikost datasetu (~3000 vzorků).  
+  - Nekonzistentní kvalita dat a špatné labely.  
 
---- 
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/rMTkWhxv)
+---
 
-*Reminder*
-*   *Do not miss [deadline](https://su2.utia.cas.cz/labs.html#projects) for uploading your implementation and documentation of your final project.*
-*   *Include working demo in Colab, in which you clearly demonstrate your results. Please refer to the Implementation section on the [labs website](https://su2.utia.cas.cz/labs.html#projects).*
-*   *Do not upload huge datasets to GitHub repository.*
+## 🚀 **Možnosti zlepšení**  
+1. **Rozšíření datasetu** o více vzorků.  
+2. **Čištění dat** k odstranění chybných labelů a šumových nahrávek.  
+3. **Transfer Learning**: Využití předtrénovaných modelů pro rychlejší a přesnější výsledky.  
+4. **Augmentace dat**: Přidání variací (např. šum, změny hlasitosti, časové posuny) pro lepší generalizaci modelu.  
+
+---
+
+## 📁 **Struktura projektu**  
+
+```plaintext
+root/
+│-- data/                     
+│   ├── evaluation/           
+│   │   └── 4KcakwwF0Bc.flac                # Zvukový soubor použitelný pro evaluaci a zobrazení výsledků
+│   ├── weights/                            # Váhy natrénovaných modelů
+│   │   └── cnn_2s_128x128_best   
+│   └── dataset_metadata/                   # Metadata datasetu - slouží pro stahování dat z youtube
+│       └── vehicle_audiset_full.parquet    # Stažená metadata pro kompletní vehicle dataset
+│-- data_preparation/                       # Skripty pro sběr a předzpracování dat
+│   ├── data_collection_final.ipynb         # Skript pro získávání dat
+│   └── data_preprocessing.ipynb            # Skript pro předzpracování dat
+│-- noise_recognition/                      # Notebooky a modely pro trénování
+│   ├── Noise_recognition.ipynb             # Hlavní notebook pro trénování modelu
+│-- visualization/                          # Notebooky pro vizualizaci výsledků
+│   └── result_visualization.ipynb          # Skript pro vizualizaci výsledků
+
+```
+
+---
