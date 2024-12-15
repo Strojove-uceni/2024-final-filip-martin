@@ -63,3 +63,6 @@ root/
 ```
 
 ---
+
+## 📊 **Prezentace** 
+https://campuscvut-my.sharepoint.com/:p:/g/personal/sircfili_cvut_cz/EeqDjGKkDRdPlRwrsuKPfLkBJ__HAmDkhxjNqAHc9-ToCA?e=XkDdEJ
